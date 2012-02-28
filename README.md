@@ -395,7 +395,18 @@ The category is also designed to be extensible, where applicable. For example, m
 
     #define NSStandardUserDefaults [NSUserDefaults standardUserDefaults]
     
+##Other Functionality##
+
+**Fast Enumeration**
+
+> Allows the user's defaults database to be enumerated over like so:
+
+    for (NSString *key in userDefaultsInstance)
     
+> *Discussion*
+
+>> This functionality is equivalent to fast-enumerating over the defaults database's `dictionaryRepresentation`.
+
 #License#
 
 License Agreement for Source Code provided by Patrick Perini
