@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Inspyre Technologies. All rights reserved.
 //
 
-// add https://github.com/mizage/DBUserDefaults
-
 #import <Foundation/Foundation.h>
 
 // Macros
