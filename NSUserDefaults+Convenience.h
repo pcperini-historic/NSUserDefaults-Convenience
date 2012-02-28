@@ -3,7 +3,7 @@
 //  NSUserDefaults-ConvenienceTests
 //
 //  Created by Patrick Perini on 2/27/12.
-//  Copyright (c) 2012 Inspyre Technologies. All rights reserved.
+//  Licensing information available in README.md
 //
 
 #import <Foundation/Foundation.h>
