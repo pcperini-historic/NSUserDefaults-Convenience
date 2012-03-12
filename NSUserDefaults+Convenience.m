@@ -162,10 +162,7 @@ static void *NSUserDefaultsiCloudHandlerKey;
 
 - (void)resetValuesForKeys:(NSArray *)keys
 {
-    for (NSString *key in keys)
-    {
-        [self removeObjectForKey: key];
-    }
+    [self removeValuesForKeys: keys];
     [self synchronize];
 }
 
