@@ -257,6 +257,11 @@ static void *NSUserDefaultsiCloudHandlerKey;
     [[NSNotificationCenter defaultCenter] removeObserver: currentiCloudHandler
                                                     name: NSUserDefaultsDidChangeNotification
                                                   object: nil];
+                                                  
+    objc_setAssociatedObject(self,
+                             NSUserDefaultsiCloudHandlerKey,
+                             nil,
+                             OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end
