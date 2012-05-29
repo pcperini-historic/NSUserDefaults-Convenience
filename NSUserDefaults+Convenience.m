@@ -61,6 +61,46 @@ static void *NSUserDefaultsiCloudHandlerKey;
                                                                   count: len];
 }
 
+// Fast Additions
+- (void)setObjects:(NSArray *)objects forKeys:(NSArray *)keys
+{
+    for (int keyIndex = 0; keyIndex < [keys count]; keyIndex++)
+    {
+        [self setObject: [objects objectAtIndex: keyIndex] forKey: [keys objectAtIndex: keyIndex]];
+    }
+}
+
+- (void)addObjectsAndKeysFromDictionary:(NSDictionary *)keyValuePairs
+{
+    [self setObjects: [keyValuePairs allValues] forKeys: [keyValuePairs allKeys]];
+    [self synchronize];
+}
+
+- (void)addObjectsAndKeys:(id)firstObject, ... NS_REQUIRES_NIL_TERMINATION;
+{
+    NSMutableArray *objects = [NSMutableArray array];
+    NSMutableArray *keys = [NSMutableArray array];
+    
+    va_list args;
+    va_start(args, firstObject);
+    for (id element = firstObject; element != nil; element = va_arg(args, id))
+    {
+        if ([objects count] > [keys count]) // it's a key
+        {
+            [keys addObject: element];
+        }
+        else // it's an object
+        {
+            [objects addObject: element];
+        }
+    }
+    
+    va_end(args);
+    
+    [self setObjects: objects forKeys: keys];
+    [self synchronize];
+}
+
 // Getting User Defaults with Fallback Value
 - (id)objectForKey: (NSString *)key or: (id)fallback
 {

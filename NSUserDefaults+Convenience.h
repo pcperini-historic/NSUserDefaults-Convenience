@@ -13,6 +13,11 @@
 
 @interface NSUserDefaults (Convenience) <NSFastEnumeration>
 
+// Fast Additions
+- (void)setObjects:                      (NSArray *)objects forKeys: (NSArray *)keys;
+- (void)addObjectsAndKeysFromDictionary: (NSDictionary *)keyValuePairs;
+- (void)addObjectsAndKeys:               (id)firstObject, ... NS_REQUIRES_NIL_TERMINATION;
+
 // Getting User Defaults with Fallback Value
 - (id)objectForKey:                 (NSString *)key or: (id)fallback;
 - (NSString *)stringForKey:         (NSString *)key or: (NSString *)fallback;
