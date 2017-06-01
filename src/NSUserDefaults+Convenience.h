@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGBase.h>
 
 // Macros
 #define NSStandardUserDefaults [NSUserDefaults standardUserDefaults]
