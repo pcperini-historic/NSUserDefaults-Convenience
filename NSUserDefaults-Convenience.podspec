@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "NSUserDefaults-Convenience"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "NSUserDefaults-Convenience is a category on NSUserDefaults"
 
   s.description  = <<-DESC

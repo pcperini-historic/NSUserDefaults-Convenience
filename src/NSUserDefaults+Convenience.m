@@ -14,6 +14,7 @@ NSString *const NSUserDefaultsCannotSyncException = @"NSUserDefaulstCannotSyncEx
 
 // Private Variables
 static void *NSUserDefaultsiCloudHandlerKey;
+static void *NSUserDefaultsStoreDidChangeKey;
 
 @implementation NSUserDefaults (Convenience_Private)
 
@@ -264,16 +265,22 @@ static void *NSUserDefaultsiCloudHandlerKey;
     };
     
     id currentiCloudHandler;
-    currentiCloudHandler = [[NSNotificationCenter defaultCenter] addObserverForName: NSUbiquitousKeyValueStoreDidChangeExternallyNotification
-                                                                             object: nil
-                                                                              queue: nil
-                                                                         usingBlock: receiveUpdatesFromiCloud];
+    id currentStoreDidChangeHandler;
+    
+    currentStoreDidChangeHandler = [[NSNotificationCenter defaultCenter] addObserverForName: NSUbiquitousKeyValueStoreDidChangeExternallyNotification
+                                                                                     object: nil
+                                                                                      queue: nil
+                                                                                 usingBlock: receiveUpdatesFromiCloud];
     
     currentiCloudHandler = [[NSNotificationCenter defaultCenter] addObserverForName: NSUserDefaultsDidChangeNotification
                                                                              object: nil
                                                                               queue: nil
                                                                          usingBlock: pushUpdatesToiCloud];
     
+    objc_setAssociatedObject(self,
+                             NSUserDefaultsStoreDidChangeKey,
+                             currentStoreDidChangeHandler,
+                             OBJC_ASSOCIATION_RETAIN);
     objc_setAssociatedObject(self,
                              NSUserDefaultsiCloudHandlerKey,
                              currentiCloudHandler,
@@ -286,15 +293,20 @@ static void *NSUserDefaultsiCloudHandlerKey;
         return;
     
     id currentiCloudHandler = objc_getAssociatedObject(self, NSUserDefaultsiCloudHandlerKey);
+    id currentStoreDidChangeHandler = objc_getAssociatedObject(self, NSUserDefaultsStoreDidChangeKey);
     
-    [[NSNotificationCenter defaultCenter] removeObserver: currentiCloudHandler
+    [[NSNotificationCenter defaultCenter] removeObserver: currentStoreDidChangeHandler
                                                     name: NSUbiquitousKeyValueStoreDidChangeExternallyNotification
                                                   object: nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver: currentiCloudHandler
                                                     name: NSUserDefaultsDidChangeNotification
                                                   object: nil];
-                                                  
+    
+    objc_setAssociatedObject(self,
+                             NSUserDefaultsStoreDidChangeKey,
+                             nil,
+                             OBJC_ASSOCIATION_ASSIGN);
     objc_setAssociatedObject(self,
                              NSUserDefaultsiCloudHandlerKey,
                              nil,
